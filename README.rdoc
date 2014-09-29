@@ -1,0 +1,72 @@
+== How to Make a paperclip work ==
+
+Configure a new app with rails 3.2.19 version
+
+== Rails generate ==
+rails g scaffold modelname fieldname:data_type 
+
+rake db:create
+
+rake db:migrate
+
+== Gem paperclip in Gemfile ==
+
+gem 'paperclip'
+
+and bundle 
+
+
+== now generate a model for the paperclip field ==
+
+rails g paperclip modelname fieldname(as photo)
+
+then
+
+rake db:migrate
+
+
+== Now in model welcome.rb ==
+
+
+add fields 
+
+  attr_accessible :name, :fieldname(as :photo)
+
+next add the below commands in the model same page
+
+has_attached_file :photo, :styles => { :small => "150x150>" },
+  :url => "/assets/products/:id/:style/:basename.:extension",
+  :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
+
+  validates_attachment_presence :photo
+validates_attachment_size :photo, :less_than => 5.megabytes
+validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/jpg']
+
+
+
+
+==Next in the views ==
+
+in the index.html.erb
+
+include this inside the loop 
+    <td><%= image_tag welcome.photo %></td>
+anywhere 
+
+
+in the show.html.erb include this line
+
+  <%= image_tag @welcome.photo, :height => 40 %>
+
+
+in the form.html.erb include this wherever
+  <%= f.file_field :photo %>
+
+
+if we want to link to that particular image then 
+
+ <td><a href="<%= welcome.photo %>"><%= image_tag welcome.photo, :height=>50 %></a></td>
+
+
+
+

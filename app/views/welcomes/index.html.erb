@@ -1,0 +1,24 @@
+<h1>Listing welcomes</h1>
+asassas
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @welcomes.each do |welcome| %>
+  <tr>
+    <td><%= welcome.name %></td>
+    <td><a href="<%= welcome.photo %>"><%= image_tag welcome.photo, :height=>50 %></a></td>
+    <td><%= link_to 'Show', welcome %></td>
+    <td><%= link_to 'Edit', edit_welcome_path(welcome) %></td>
+    <td><%= link_to 'Destroy', welcome, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Welcome', new_welcome_path %>
